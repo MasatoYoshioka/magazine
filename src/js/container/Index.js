@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { orientation, touch, touch_move, touch_end } from '../actions/magazine'
 import { init_content } from '../actions/contents'
 
-import "../../sass/sample"
+import style from "../../scss/sample"
 
 
 class Index extends React.Component{
@@ -48,9 +48,10 @@ class Index extends React.Component{
   }
 
   render(){
+    console.log( style )
     return(
-      <div> 
-        <div>{this.props.magazine.change_x}</div>
+      <div className={ style.hero }>
+        <div className={ style.red }>{this.props.magazine.change_x}</div>
         <div>{this.props.magazine.change_y}</div>
         <div>{this.props.magazine.orientation}</div>
       </div>
@@ -60,7 +61,8 @@ class Index extends React.Component{
 
 function mapStateToProps(state){
   return {
-    magazine: state.magazineApp
+    magazine: state.magazineApp,
+    contents: state.contentsApp
   }
 }
 

@@ -1,0 +1,8 @@
+.red{
+  color: red
+}
+
+.hero {
+  composes: .hero from 'bulma';
+}
+
