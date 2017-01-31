@@ -21,7 +21,7 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     contentBase: './public',
-    host: "192.168.33.10",
+    host: "192.168.1.4",
     port: 3000
   }
 }
