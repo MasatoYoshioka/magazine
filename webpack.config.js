@@ -1,30 +1,35 @@
+const webpack = require("webpack");
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractStyles = new ExtractTextPlugin("style.css");
+const extractFonts = new ExtractTextPlugin("fonts.css");
 
 module.exports = {
-  //context: __dirname + "/src",
-  entry: __dirname + "/src/js/index.js",
-  output: {
-    path: __dirname + "/public",
-    filename: "/dist/bundle.js"
+  context: path.resolve(__dirname, "src"),
+  entry: {
+    app: './js/index.js'
   },
-  module: {
+  module:{
     loaders: [
-      { test: /\.js$/,   loader: "babel-loader", exclude: /node_modules/ },
-      { test: /\.scss$/, loaders:[
-        "style-loader", 
-        "css-loader?sourceMap&modules&importLoader=2", 
-        "sass-loader", 
-        "bulma-loader"
-          //?theme=./node_modules/bulma/bulma.sass"
-      ]}
-    ]
+      { test: '/style/\.css$/',
+        loader: extractStyles.extract({
+          loader: 'css-loader?importLoaders=1!postcss-loader'
+        })
+      },
+      { test: /\.js$/, loader: "babel-loader", exclude: /node_modules/ }
+    ],
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
   resolve: {
-    extensions: [".webpack.js", ".web.js", ".js", ".scss", ".html"]
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
-  devtool: "source-map",
-  devServer: {
-    contentBase: './public',
-    host: "192.168.1.4",
-    port: 3000
-  }
+
+  plugins: [
+    extractStyles,
+    extractFonts
+  ]
+
 }
